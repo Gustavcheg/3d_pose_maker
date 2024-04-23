@@ -1,0 +1,10 @@
+---
+version: 0.0.1
+author: GOOSLEENG
+
+paths:
+  models: 
+    mediapipe: './models/mediapipe/'
+    other: './models/other/'
+  utils: utils/
+  media: media/
