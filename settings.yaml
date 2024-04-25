@@ -8,3 +8,5 @@ paths:
     other: './models/other/'
   utils: utils/
   media: media/
+  landmarks_result: media/keypoints
+  logs: logs/
