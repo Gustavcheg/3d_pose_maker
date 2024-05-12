@@ -11,9 +11,9 @@ if __name__ == "__main__":
     logger.add(cfg['paths']['logs'] + 'logee.log', format="{time: YYYY-MM-DD HH:mm:SS} | {level} | {message}")
     logger.info("App started!")
     poser = PoseDetector()
-    # detected_result, annotated_image = poser.detect_pose_on_image(visualize=True)
-    # show_image(annotated_image)
+    detected_result, annotated_image = poser.detect_pose_on_image(visualize=True)
+    show_image(annotated_image)
 
-    poser.detect_pose_on_video(visualize=True)
+    # poser.detect_pose_on_video(visualize=True)
 
     logger.info("App stopped!")

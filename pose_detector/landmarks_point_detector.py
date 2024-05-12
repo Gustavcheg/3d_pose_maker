@@ -15,6 +15,7 @@ from pose_detector.utils.cfg_load import cfg
 from .utils.tools import joints_to_json
 
 
+
 class PoseDetector():
     def __init__(self) -> None:
         self.model_path = cfg['paths']['models']['mediapipe'] + '/pose_landmarker_full.task'
@@ -22,8 +23,8 @@ class PoseDetector():
         self.pose_landmarker = vision.PoseLandmarker
         self.landmarker_option = vision.PoseLandmarkerOptions
         self.running_mode = vision.RunningMode
-
-    """ Detect pose on a single image """
+    
+    @logger.catch
     def detect_pose_on_image(self, rgb_image="me_test_1.jpg", visualize=False):
         """ 
             Select IMAGE mode 
@@ -53,7 +54,7 @@ class PoseDetector():
 
             # Save keypoints (landmarks) in JSON file
             try:
-                json = joints_to_json(detection_result=detection_result)
+                json = joints_to_json(detection_result.pose_landmarks[0])
                 logger.success("Successfully save keypoints coordinates in JSON!")
             except:
                 logger.exception("Error occured, see logs...")
@@ -117,7 +118,8 @@ class PoseDetector():
                 ''' TO CORRECT: First 15 frames Doesn't calculate '''
                 try:
                     json = joints_to_json(detection_result=detection_result,
-                                           filename_prefix=int(cap.get(cv.CAP_PROP_POS_FRAMES)))
+                                          frame_number=int(cap.get(cv.CAP_PROP_POS_FRAMES)),
+                                           filename_prefix=video)
                 except Exception as e:
                     if e.__class__.__name__ != "IndexError":
                         logger.exception("Error occured, see logs...")
@@ -139,7 +141,7 @@ class PoseDetector():
             out.release()
             cv.destroyAllWindows()
 
-        logger.success("Success!")
+        logger.success("Success video detection!")
         return 0
     
     def _draw_landmarks_on_image(self, rgb_image, detection_result):
@@ -171,3 +173,14 @@ class PoseDetector():
 
         return annotated_image
         
+
+    # def _write_joints_to_json(landmarks, frame_number, filename_prefix="singleimg"):
+    #     joint_coords = {}
+    #     for idx, landmark in enumerate(landmarks):
+    #         joint_coords[f"{MP_POSE.PoseLandmark(idx).name,}"] = [idx, landmark.x, landmark.y, landmark.z]
+
+    #     joints_coord_path = cfg['paths']['landmarks_result'] + '/{0}_joint_coords.json'.format(filename_prefix)
+    #     with open(joints_coord_path, 'w') as outfile:
+    #         json.dump(joint_coords, outfile, indent=4)
+
+    # return joint_coords
