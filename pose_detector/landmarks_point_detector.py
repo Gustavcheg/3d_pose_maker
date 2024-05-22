@@ -25,7 +25,7 @@ class PoseDetector():
         self.running_mode = vision.RunningMode
     
     @logger.catch
-    def detect_pose_on_image(self, rgb_image="me_test_1.jpg", visualize=False):
+    def detect_pose_on_image(self, rgb_image="me_test_1.jpg", output_dir="", visualize=False):
         """ 
             Select IMAGE mode 
             rgb_image: (str) path to image file
@@ -67,7 +67,7 @@ class PoseDetector():
             return detection_result, annotated_image
         
     @logger.catch
-    def detect_pose_on_video(self, video="001_Test.mp4", visualize=False):
+    def detect_pose_on_video(self, video="001_Test.mp4", output_dir="", visualize=False):
         """ 
             Detect pose on multiple frames (video)
             video: (str) path to image video file
