@@ -11,13 +11,6 @@ from .cfg_load import cfg
 MP_POSE = solutions.pose
 
 
-def video_to_frames():
-    '''
-        IN PROGRESS
-    '''
-
-    return 0
-
 def show_image(image, title="42"):
     ''''
         Show image
@@ -27,7 +20,7 @@ def show_image(image, title="42"):
     cv.waitKey(0)
 
 
-def img_preproccess(image="me_test_1.jpg"):
+def img_preprocess(image="me_test_1.jpg"):
     '''
         IN PROGRESS
     '''
@@ -45,14 +38,7 @@ def joints_to_json(landmarks, frame_number=0, filename_prefix="singleimg"):
             filename_prefix: resulting  name 
     '''
 
-    pose_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
-    pose_landmarks_proto.landmark.extend([
-        landmark_pb2.NormalizedLandmark(x=landmark.x, y=landmark.y, z=landmark.z) for landmark in landmarks
-    ])
-
     joint_coords = {}
-    for idx, landmark in enumerate(landmarks):
-        joint_coords[f"{idx}_" + f"{MP_POSE.PoseLandmark(idx).name}"] = [landmark.x, landmark.y, landmark.z]
 
     # Create folder for json_keypoints
     try:

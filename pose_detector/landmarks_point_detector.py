@@ -18,7 +18,7 @@ from .utils.tools import joints_to_json
 
 class PoseDetector():
     def __init__(self) -> None:
-        self.model_path = cfg['paths']['models']['mediapipe'] + '/pose_landmarker_full.task'
+        self.model_path = cfg['paths']['models']['mediapipe'] + '/pose_landmarker_heavy.task'
         self.base_options = python.BaseOptions
         self.pose_landmarker = vision.PoseLandmarker
         self.landmarker_option = vision.PoseLandmarkerOptions
@@ -117,7 +117,7 @@ class PoseDetector():
                 # Save keypoints(landmarks) in JSON file
                 ''' TO CORRECT: First 15 frames Doesn't calculate '''
                 try:
-                    json = joints_to_json(detection_result=detection_result,
+                    json = joints_to_json(landmarks=detection_result,
                                           frame_number=int(cap.get(cv.CAP_PROP_POS_FRAMES)),
                                            filename_prefix=video)
                 except Exception as e:
